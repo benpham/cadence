@@ -118,26 +118,25 @@ export default function Calendar({ today, badgeIns, isBadgedIn, toggle }: Calend
         </div>
       </div>
 
-      <div className="calendar__grid" role="grid" aria-readonly="false">
-        <div className="calendar__row calendar__row--head" role="row">
-          <span className="calendar__week-head" role="columnheader">Week</span>
+      <div className="calendar__grid">
+        <div className="calendar__row calendar__row--head" aria-hidden="true">
+          <span className="calendar__week-head">Week</span>
           {DAYS_OF_WEEK.map((dayName, i) => (
             <span
               key={dayName}
               className="calendar__day-head"
-              role="columnheader"
-              aria-label={DAYS_OF_WEEK_LONG[i]}
+              title={DAYS_OF_WEEK_LONG[i]}
             >
               {dayName}
             </span>
           ))}
-          <span className="calendar__summary-head" role="columnheader">3-of-3</span>
+          <span className="calendar__summary-head">3-of-3</span>
         </div>
 
         {weeks.map((week) => {
           const compliance = weekCompliance(week, badgeIns)
           return (
-            <div className="calendar__row" key={week.start.toISOString()} role="row">
+            <div className="calendar__row" key={week.start.toISOString()}>
               <span className="calendar__week-label">{week.label}</span>
               {week.days.map((day) => (
                 <DayCell
@@ -217,11 +216,11 @@ type WeekSummaryProps = {
 
 function WeekSummary({ count, compliant }: WeekSummaryProps) {
   const filled = Math.min(count, COMPLIANT_DAYS_PER_WEEK)
-  const overflow = Math.max(0, count - COMPLIANT_DAYS_PER_WEEK)
   return (
     <div
-      className={`week-summary${compliant ? ' week-summary--compliant' : ''}`}
+      role="img"
       aria-label={`${count} badge-ins this week — ${compliant ? 'compliant' : 'not compliant'}`}
+      className={`week-summary${compliant ? ' week-summary--compliant' : ''}`}
     >
       <span className="week-summary__pips" aria-hidden="true">
         {Array.from({ length: COMPLIANT_DAYS_PER_WEEK }).map((_, i) => (
@@ -233,7 +232,6 @@ function WeekSummary({ count, compliant }: WeekSummaryProps) {
       </span>
       <span className="week-summary__count" aria-hidden="true">
         {count}
-        {overflow > 0 ? '' : ''}
       </span>
     </div>
   )

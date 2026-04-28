@@ -110,6 +110,7 @@ export default function Stats({ today }: StatsProps) {
                         aria-valuemin={0}
                         aria-valuemax={COMPLIANT_DAYS_PER_WEEK}
                         aria-valuenow={Math.min(c.badgeInCount, COMPLIANT_DAYS_PER_WEEK)}
+                        aria-label={`Week ${idx + 1} progress: ${c.badgeInCount} of ${COMPLIANT_DAYS_PER_WEEK} badge-ins`}
                       >
                         <span
                           className={`stats__bar-fill${c.isCompliant ? ' is-compliant' : ''}`}

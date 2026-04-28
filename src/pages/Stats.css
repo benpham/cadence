@@ -114,6 +114,11 @@
   background-color: var(--color-primary-soft);
 }
 
+.stats__row--current td.stats__range,
+.stats__row--current td.stats__col-num .stats__divisor {
+  color: #1E3A8A;
+}
+
 .stats__week-num {
   font-weight: 600;
 }
