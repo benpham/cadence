@@ -28,8 +28,19 @@ export function BadgeInsProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth()
   const [badgeIns, setBadgeIns] = useState<Set<string>>(loadLocal)
 
+  // Keep a ref to current badgeIns so the user effect can read it without a dependency
+  const badgeInsRef = { current: badgeIns }
+  badgeInsRef.current = badgeIns
+
   useEffect(() => {
     if (!user) {
+      // Snapshot in-memory state to localStorage before switching to local-only mode.
+      // Needed because localStorage is cleared after Supabase sync to prevent stale
+      // dates from being re-merged on refresh.
+      const snapshot = badgeInsRef.current
+      if (snapshot.size > 0) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([...snapshot]))
+      }
       setBadgeIns(loadLocal())
       return
     }
