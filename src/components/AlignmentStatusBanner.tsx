@@ -17,11 +17,7 @@ export default function AlignmentStatusBanner({
   compliantCount,
   totalWeeks,
 }: AlignmentStatusBannerProps) {
-  const progressPct = Math.min(
-    100,
-    (compliantCount / COMPLIANT_WEEKS_REQUIRED) * 100,
-  )
-  const thresholdPct = (COMPLIANT_WEEKS_REQUIRED / totalWeeks) * 100
+  const progressPct = (compliantCount / totalWeeks) * 100
 
   return (
     <section
@@ -52,23 +48,32 @@ export default function AlignmentStatusBanner({
           className="alignment-banner__progress"
           role="progressbar"
           aria-valuemin={0}
-          aria-valuemax={COMPLIANT_WEEKS_REQUIRED}
+          aria-valuemax={totalWeeks}
           aria-valuenow={compliantCount}
-          aria-label={`Progress toward In Alignment: ${compliantCount} of ${COMPLIANT_WEEKS_REQUIRED} required compliant weeks`}
+          aria-label={`Progress toward In Alignment: ${compliantCount} of ${totalWeeks} weeks compliant, ${COMPLIANT_WEEKS_REQUIRED} required`}
         >
           <div className="alignment-banner__track">
             <div
               className="alignment-banner__fill"
               style={{ width: `${progressPct}%` }}
             />
-            <div
-              className="alignment-banner__threshold"
-              style={{ left: `${thresholdPct}%` }}
-              aria-hidden="true"
-            >
-              <span className="alignment-banner__threshold-tick" />
-              <span className="alignment-banner__threshold-label">Threshold</span>
-            </div>
+            {Array.from({ length: totalWeeks - 1 }, (_, i) => i + 1).map((week) => {
+              const isThreshold = week === COMPLIANT_WEEKS_REQUIRED
+              return (
+                <div
+                  key={week}
+                  className={`alignment-banner__tick${isThreshold ? ' alignment-banner__tick--threshold' : ''}`}
+                  style={{ left: `${(week / totalWeeks) * 100}%` }}
+                  aria-hidden="true"
+                >
+                  {isThreshold && (
+                    <span className="alignment-banner__threshold-label">
+                      {COMPLIANT_WEEKS_REQUIRED} wks
+                    </span>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>

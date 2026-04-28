@@ -157,33 +157,37 @@
   background: linear-gradient(90deg, var(--color-danger) 0%, var(--color-warning) 100%);
 }
 
-.alignment-banner__threshold {
+/* Week tick marks */
+.alignment-banner__tick {
   position: absolute;
-  top: -4px;
-  bottom: -4px;
-  width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  top: 1px;
+  bottom: 1px;
+  width: 1px;
+  background-color: var(--color-border-strong);
+  opacity: 0.6;
   pointer-events: none;
+  transform: translateX(-50%);
 }
 
-.alignment-banner__threshold-tick {
+/* Threshold tick at 8 weeks — taller and more prominent */
+.alignment-banner__tick--threshold {
+  top: -5px;
+  bottom: -5px;
   width: 2px;
-  height: 18px;
   background-color: var(--color-text);
+  opacity: 0.7;
   border-radius: 1px;
-  opacity: 0.65;
 }
 
 .alignment-banner__threshold-label {
   position: absolute;
-  top: 22px;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 0.6875rem;
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   white-space: nowrap;
-  transform: translateX(-50%);
 }
