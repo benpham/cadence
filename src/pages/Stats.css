@@ -116,7 +116,7 @@
 
 .stats__row--current td.stats__range,
 .stats__row--current td.stats__col-num .stats__divisor {
-  color: #1E3A8A;
+  color: var(--color-primary-dark);
 }
 
 .stats__week-num {

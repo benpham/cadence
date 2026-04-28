@@ -74,6 +74,36 @@
   --duration-slow: 0.5s;
 }
 
+/* Dark mode overrides */
+[data-theme="dark"] {
+  --color-bg: #0F172A;
+  --color-surface: #1E293B;
+  --color-surface-elevated: #1E293B;
+  --color-text: #F1F5F9;
+  --color-text-muted: #94A3B8;
+  --color-text-subtle: #64748B;
+  --color-border: #334155;
+  --color-border-strong: #475569;
+  --color-primary-soft: #1E3A5F;
+  --color-primary-dark: #93C5FD;
+  --color-success-soft: #064E3B;
+  --color-warning-soft: #451A03;
+  --color-danger-soft: #450A0A;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 32px rgba(37, 99, 235, 0.25), 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] body {
+  background-image:
+    radial-gradient(ellipse 900px 600px at 80% -10%, rgba(37, 99, 235, 0.15) 0%, transparent 65%),
+    radial-gradient(ellipse 700px 500px at -10% 20%, rgba(14, 165, 233, 0.10) 0%, transparent 65%);
+}
+
+[data-theme="dark"] .status-pill[data-status="aligned"] { color: #6EE7B7; }
+[data-theme="dark"] .status-pill[data-status="at-risk"] { color: #FCD34D; }
+[data-theme="dark"] .status-pill[data-status="off-track"] { color: #FCA5A5; }
+
 html, body {
   width: 100%;
   min-height: 100%;
