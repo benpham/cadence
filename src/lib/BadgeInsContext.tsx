@@ -54,6 +54,7 @@ export function BadgeInsProvider({ children }: { children: ReactNode }) {
       }
 
       setBadgeIns(remote)
+      localStorage.removeItem(STORAGE_KEY)
     }
 
     syncFromSupabase()
