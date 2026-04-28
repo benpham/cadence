@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      // SPA redirect: encode the path as a query param and redirect to the base
+      var l = window.location;
+      var base = l.pathname.split('/').slice(0, 2).join('/');
+      var path = l.pathname.slice(base.length) || '/';
+      l.replace(
+        l.protocol + '//' + l.host + base +
+        '/?r=' + encodeURIComponent(path + l.search) + l.hash
+      );
+    </script>
+  </head>
+</html>
