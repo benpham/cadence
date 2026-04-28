@@ -73,6 +73,12 @@
   flex-shrink: 0;
 }
 
+@media (max-width: 600px) {
+  .site-header__wordmark {
+    display: none;
+  }
+}
+
 @media (max-width: 720px) {
   .site-header__inner {
     flex-wrap: wrap;
