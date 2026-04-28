@@ -83,21 +83,6 @@
   .site-header__wordmark {
     display: none;
   }
-}
-
-@media (max-width: 720px) {
-  .site-header__status {
-    display: none;
-  }
-  .site-header__nav {
-    margin-left: var(--space-2);
-  }
-  .site-header__link {
-    padding: var(--space-2) var(--space-3);
-  }
-}
-
-@media (max-width: 480px) {
   .site-header__link-text {
     display: none;
   }
@@ -106,5 +91,8 @@
   }
   .site-header__link {
     padding: var(--space-2);
+  }
+  .site-header__nav {
+    margin-left: var(--space-2);
   }
 }
