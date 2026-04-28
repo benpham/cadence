@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import type { AlignmentStatus } from '../lib/dateUtils'
 import { statusLabel } from '../lib/dateUtils'
 import AuthButton from './AuthButton'
+import StatusPill from './StatusPill'
 import './Header.css'
 
 type HeaderProps = {
@@ -57,13 +58,13 @@ export default function Header({ status, compliantCount, totalWeeks }: HeaderPro
           </NavLink>
         </nav>
 
-        <span
-          className="status-pill site-header__status"
-          data-status={status}
+        <StatusPill
+          status={status}
+          className="site-header__status"
           aria-label={`Current status: ${statusLabel(status)}, ${compliantCount} of ${totalWeeks} weeks compliant`}
         >
           {statusLabel(status)}
-        </span>
+        </StatusPill>
         <AuthButton />
       </div>
     </header>

@@ -4,6 +4,7 @@ import {
   ROLLING_WEEKS,
 } from '../lib/dateUtils'
 import { useTheme } from '../lib/ThemeContext'
+import StatusPill from '../components/StatusPill'
 import { useSettings, type RequiredDays } from '../lib/SettingsContext'
 import './About.css'
 
@@ -75,15 +76,15 @@ export default function About() {
           <h2 id="status-meanings" className="about__h2">What the statuses mean</h2>
           <ul className="about__status-list">
             <li>
-              <span className="status-pill" data-status="aligned">In Alignment</span>
+              <StatusPill status="aligned">In Alignment</StatusPill>
               <span>{COMPLIANT_WEEKS_REQUIRED} or more compliant weeks in the rolling window.</span>
             </li>
             <li>
-              <span className="status-pill" data-status="at-risk">At Risk</span>
+              <StatusPill status="at-risk">At Risk</StatusPill>
               <span>{COMPLIANT_WEEKS_REQUIRED - 2} or {COMPLIANT_WEEKS_REQUIRED - 1} compliant weeks — a slip away from falling out.</span>
             </li>
             <li>
-              <span className="status-pill" data-status="off-track">Out of Alignment</span>
+              <StatusPill status="off-track">Out of Alignment</StatusPill>
               <span>Fewer than {COMPLIANT_WEEKS_REQUIRED - 2} compliant weeks — work needed to recover.</span>
             </li>
           </ul>

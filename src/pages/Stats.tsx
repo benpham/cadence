@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useBadgeInsContext } from '../lib/BadgeInsContext'
 import { useSettings } from '../lib/SettingsContext'
+import StatusPill from '../components/StatusPill'
 import {
   COMPLIANT_DAYS_PER_WEEK,
   COMPLIANT_WEEKS_REQUIRED,
@@ -98,12 +99,9 @@ export default function Stats({ today }: StatsProps) {
                       <span className="stats__divisor"> / {COMPLIANT_DAYS_PER_WEEK}+</span>
                     </td>
                     <td>
-                      <span
-                        className="status-pill"
-                        data-status={c.isCompliant ? 'aligned' : 'off-track'}
-                      >
+                      <StatusPill status={c.isCompliant ? 'aligned' : 'off-track'}>
                         {c.isCompliant ? 'Yes' : 'No'}
-                      </span>
+                      </StatusPill>
                     </td>
                     <td className="stats__progress-cell">
                       <span
