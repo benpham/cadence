@@ -80,19 +80,11 @@
 }
 
 @media (max-width: 720px) {
-  .site-header__inner {
-    flex-wrap: wrap;
-    height: auto;
-    padding-top: var(--space-3);
-    padding-bottom: var(--space-3);
-    gap: var(--space-3);
+  .site-header__status {
+    display: none;
   }
   .site-header__nav {
-    order: 3;
-    margin-left: 0;
-    flex-basis: 100%;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    margin-left: var(--space-2);
   }
   .site-header__link {
     padding: var(--space-2) var(--space-3);
