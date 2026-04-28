@@ -43,7 +43,7 @@ export default function StatusPill({ status, children, className, 'aria-label': 
       aria-label={ariaLabel}
     >
       <StatusIcon status={status} />
-      {children}
+      <span className="status-pill__label">{children}</span>
     </span>
   )
 }
