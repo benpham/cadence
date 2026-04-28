@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import type { AlignmentStatus } from '../lib/dateUtils'
 
 type Status = AlignmentStatus | 'off-track'
@@ -6,6 +7,7 @@ type StatusPillProps = {
   status: Status
   children: React.ReactNode
   className?: string
+  tooltip?: string
   'aria-label'?: string
 }
 
@@ -35,15 +37,36 @@ function StatusIcon({ status }: { status: Status }) {
   )
 }
 
-export default function StatusPill({ status, children, className, 'aria-label': ariaLabel }: StatusPillProps) {
+export default function StatusPill({ status, children, className, tooltip, 'aria-label': ariaLabel }: StatusPillProps) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [open])
+
   return (
     <span
-      className={`status-pill${className ? ` ${className}` : ''}`}
+      ref={ref}
+      className={`status-pill${className ? ` ${className}` : ''}${tooltip ? ' status-pill--has-tooltip' : ''}`}
       data-status={status}
       aria-label={ariaLabel}
+      onClick={tooltip ? () => setOpen((v) => !v) : undefined}
     >
       <StatusIcon status={status} />
       <span className="status-pill__label">{children}</span>
+      {tooltip && (
+        <span className={`status-pill__tooltip${open ? ' is-open' : ''}`} aria-hidden="true">
+          {tooltip}
+        </span>
+      )}
     </span>
   )
 }

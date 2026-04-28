@@ -243,6 +243,43 @@ img {
 }
 
 /* Status pill (used in header) */
+.status-pill--has-tooltip {
+  position: relative;
+  cursor: pointer;
+}
+
+.status-pill__tooltip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+  z-index: 50;
+}
+
+.status-pill__tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-bottom-color: var(--color-text);
+}
+
+.status-pill--has-tooltip:hover .status-pill__tooltip,
+.status-pill__tooltip.is-open {
+  display: block;
+}
+
 .status-pill {
   display: inline-flex;
   align-items: center;

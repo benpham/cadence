@@ -61,6 +61,7 @@ export default function Header({ status, compliantCount, totalWeeks }: HeaderPro
         <StatusPill
           status={status}
           className="site-header__status"
+          tooltip={statusLabel(status)}
           aria-label={`Current status: ${statusLabel(status)}, ${compliantCount} of ${totalWeeks} weeks compliant`}
         >
           {statusLabel(status)}
