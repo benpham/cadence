@@ -14,7 +14,7 @@ export default function Layout({ children, status, compliantCount, totalWeeks }:
   return (
     <>
       <Header status={status} compliantCount={compliantCount} totalWeeks={totalWeeks} />
-      <main id="main" tabIndex={-1} style={{ flex: 1 }}>
+      <main id="main" tabIndex={-1} style={{ flex: 1, paddingTop: 'var(--space-8)' }}>
         {children}
       </main>
       <Footer />
