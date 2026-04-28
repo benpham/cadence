@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import {
-  COMPLIANT_DAYS_PER_WEEK,
   COMPLIANT_WEEKS_REQUIRED,
   ROLLING_WEEKS,
 } from '../lib/dateUtils'
 import { useTheme } from '../lib/ThemeContext'
+import { useSettings, type RequiredDays } from '../lib/SettingsContext'
 import './About.css'
 
 export default function About() {
@@ -13,6 +13,7 @@ export default function About() {
   }, [])
 
   const { theme, toggleTheme } = useTheme()
+  const { requiredDays, setRequiredDays } = useSettings()
 
   return (
     <div className="container about">
@@ -37,10 +38,10 @@ export default function About() {
             <li>
               <span className="about__step-num">2</span>
               <div>
-                <h3 className="about__step-title">{COMPLIANT_DAYS_PER_WEEK} badge-ins make a week compliant.</h3>
+                <h3 className="about__step-title">{requiredDays} badge-ins make a week compliant.</h3>
                 <p>
                   Click any day on the calendar to mark a badge-in. When a week reaches{' '}
-                  {COMPLIANT_DAYS_PER_WEEK} or more, the week is compliant — its summary
+                  {requiredDays} or more, the week is compliant — its summary
                   pip turns green.
                 </p>
               </div>
@@ -87,7 +88,27 @@ export default function About() {
             </li>
           </ul>
         </section>
-        <section className="about__section card fade-up fade-up-delay-4" aria-labelledby="appearance">
+        <section className="about__section card fade-up fade-up-delay-4" aria-labelledby="options">
+          <h2 id="options" className="about__h2">Options</h2>
+          <p className="about__appearance-desc">
+            How many badge-ins make a week compliant?
+          </p>
+          <div className="about__option-group" role="group" aria-label="Required badge-ins per week">
+            {([3, 4] as RequiredDays[]).map((n) => (
+              <button
+                key={n}
+                type="button"
+                className={`about__option-btn${requiredDays === n ? ' is-active' : ''}`}
+                aria-pressed={requiredDays === n}
+                onClick={() => setRequiredDays(n)}
+              >
+                {n} days
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section className="about__section card fade-up fade-up-delay-5" aria-labelledby="appearance">
           <h2 id="appearance" className="about__h2">Appearance</h2>
           <p className="about__appearance-desc">
             Switch between light and dark mode. Your preference is saved automatically.

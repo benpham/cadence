@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import {
-  COMPLIANT_DAYS_PER_WEEK,
   DAYS_OF_WEEK,
   DAYS_OF_WEEK_LONG,
   buildMonthGrid,
@@ -11,6 +10,7 @@ import {
   weekCompliance,
   type Week,
 } from '../lib/dateUtils'
+import { useSettings } from '../lib/SettingsContext'
 import './Calendar.css'
 
 type CalendarMode = 'rolling' | 'month'
@@ -23,6 +23,7 @@ type CalendarProps = {
 }
 
 export default function Calendar({ today, badgeIns, isBadgedIn, toggle }: CalendarProps) {
+  const { requiredDays } = useSettings()
   const [mode, setMode] = useState<CalendarMode>('rolling')
   const [monthCursor, setMonthCursor] = useState<Date>(
     () => new Date(today.getFullYear(), today.getMonth(), 1),
@@ -130,11 +131,11 @@ export default function Calendar({ today, badgeIns, isBadgedIn, toggle }: Calend
               {dayName}
             </span>
           ))}
-          <span className="calendar__summary-head">3-of-3</span>
+          <span className="calendar__summary-head">{requiredDays}-of-{requiredDays}</span>
         </div>
 
         {weeks.map((week) => {
-          const compliance = weekCompliance(week, badgeIns)
+          const compliance = weekCompliance(week, badgeIns, requiredDays)
           return (
             <div className="calendar__row" key={week.start.toISOString()}>
               <span className="calendar__week-label">{week.label}</span>
@@ -148,7 +149,7 @@ export default function Calendar({ today, badgeIns, isBadgedIn, toggle }: Calend
                   onToggle={() => toggle(day)}
                 />
               ))}
-              <WeekSummary count={compliance.badgeInCount} compliant={compliance.isCompliant} />
+              <WeekSummary count={compliance.badgeInCount} compliant={compliance.isCompliant} requiredDays={requiredDays} />
             </div>
           )
         })}
@@ -165,7 +166,7 @@ export default function Calendar({ today, badgeIns, isBadgedIn, toggle }: Calend
         </span>
         <span className="calendar__legend-item">
           <span className="calendar__swatch calendar__swatch--compliant" />
-          Compliant week ({COMPLIANT_DAYS_PER_WEEK}+ badge-ins)
+          Compliant week ({requiredDays}+ badge-ins)
         </span>
       </div>
     </section>
@@ -212,10 +213,11 @@ function DayCell({ day, today, cursorMonth, badgedIn, onToggle }: DayCellProps) 
 type WeekSummaryProps = {
   count: number
   compliant: boolean
+  requiredDays: number
 }
 
-function WeekSummary({ count, compliant }: WeekSummaryProps) {
-  const filled = Math.min(count, COMPLIANT_DAYS_PER_WEEK)
+function WeekSummary({ count, compliant, requiredDays }: WeekSummaryProps) {
+  const filled = Math.min(count, requiredDays)
   return (
     <div
       role="img"
@@ -223,7 +225,7 @@ function WeekSummary({ count, compliant }: WeekSummaryProps) {
       className={`week-summary${compliant ? ' week-summary--compliant' : ''}`}
     >
       <span className="week-summary__pips" aria-hidden="true">
-        {Array.from({ length: COMPLIANT_DAYS_PER_WEEK }).map((_, i) => (
+        {Array.from({ length: requiredDays }).map((_, i) => (
           <span
             key={i}
             className={`week-summary__pip${i < filled ? ' is-on' : ''}`}

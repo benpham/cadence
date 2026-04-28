@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import AlignmentStatusBanner from '../components/AlignmentStatusBanner'
 import Calendar from '../components/Calendar'
 import { useBadgeInsContext } from '../lib/BadgeInsContext'
+import { useSettings } from '../lib/SettingsContext'
 import {
   alignmentRatio,
   buildRollingWeeks,
@@ -18,8 +19,9 @@ export default function Home({ today }: HomeProps) {
   }, [])
 
   const { badgeIns, isBadgedIn, toggle } = useBadgeInsContext()
+  const { requiredDays } = useSettings()
   const rollingWeeks = buildRollingWeeks(today)
-  const ratio = alignmentRatio(rollingWeeks, badgeIns)
+  const ratio = alignmentRatio(rollingWeeks, badgeIns, requiredDays)
 
   return (
     <div className="container home">

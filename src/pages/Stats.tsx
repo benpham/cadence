@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useBadgeInsContext } from '../lib/BadgeInsContext'
+import { useSettings } from '../lib/SettingsContext'
 import {
   COMPLIANT_DAYS_PER_WEEK,
   COMPLIANT_WEEKS_REQUIRED,
@@ -21,11 +22,12 @@ export default function Stats({ today }: StatsProps) {
   }, [])
 
   const { badgeIns } = useBadgeInsContext()
+  const { requiredDays } = useSettings()
   const weeks = buildRollingWeeks(today)
-  const ratio = alignmentRatio(weeks, badgeIns)
+  const ratio = alignmentRatio(weeks, badgeIns, requiredDays)
 
   const totalBadgeIns = weeks.reduce(
-    (sum, w) => sum + weekCompliance(w, badgeIns).badgeInCount,
+    (sum, w) => sum + weekCompliance(w, badgeIns, requiredDays).badgeInCount,
     0,
   )
   const avgPerWeek = weeks.length === 0 ? 0 : totalBadgeIns / weeks.length
@@ -81,8 +83,8 @@ export default function Stats({ today }: StatsProps) {
             </thead>
             <tbody>
               {weeks.map((week, idx) => {
-                const c = weekCompliance(week, badgeIns)
-                const pct = Math.min(100, (c.badgeInCount / COMPLIANT_DAYS_PER_WEEK) * 100)
+                const c = weekCompliance(week, badgeIns, requiredDays)
+                const pct = Math.min(100, (c.badgeInCount / requiredDays) * 100)
                 const isCurrent = week.days.some((d) => isSameDay(d, today))
                 return (
                   <tr key={week.start.toISOString()} className={isCurrent ? 'stats__row--current' : ''}>
@@ -108,9 +110,9 @@ export default function Stats({ today }: StatsProps) {
                         className="stats__bar"
                         role="progressbar"
                         aria-valuemin={0}
-                        aria-valuemax={COMPLIANT_DAYS_PER_WEEK}
-                        aria-valuenow={Math.min(c.badgeInCount, COMPLIANT_DAYS_PER_WEEK)}
-                        aria-label={`Week ${idx + 1} progress: ${c.badgeInCount} of ${COMPLIANT_DAYS_PER_WEEK} badge-ins`}
+                        aria-valuemax={requiredDays}
+                        aria-valuenow={Math.min(c.badgeInCount, requiredDays)}
+                        aria-label={`Week ${idx + 1} progress: ${c.badgeInCount} of ${requiredDays} badge-ins`}
                       >
                         <span
                           className={`stats__bar-fill${c.isCompliant ? ' is-compliant' : ''}`}

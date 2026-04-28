@@ -111,7 +111,11 @@ export function buildMonthGrid(cursor: Date): { weeks: Week[]; monthCursor: Date
   return { weeks, monthCursor }
 }
 
-export function weekCompliance(week: Week, badgeInDates: Set<string>): WeekCompliance {
+export function weekCompliance(
+  week: Week,
+  badgeInDates: Set<string>,
+  requiredDays = COMPLIANT_DAYS_PER_WEEK,
+): WeekCompliance {
   let count = 0
   for (const day of week.days) {
     if (badgeInDates.has(isoDate(day))) count++
@@ -119,18 +123,22 @@ export function weekCompliance(week: Week, badgeInDates: Set<string>): WeekCompl
   return {
     week,
     badgeInCount: count,
-    isCompliant: count >= COMPLIANT_DAYS_PER_WEEK,
+    isCompliant: count >= requiredDays,
   }
 }
 
-export function alignmentRatio(weeks: Week[], badgeInDates: Set<string>): {
+export function alignmentRatio(
+  weeks: Week[],
+  badgeInDates: Set<string>,
+  requiredDays = COMPLIANT_DAYS_PER_WEEK,
+): {
   compliantCount: number
   total: number
   status: AlignmentStatus
 } {
   let compliantCount = 0
   for (const week of weeks) {
-    if (weekCompliance(week, badgeInDates).isCompliant) compliantCount++
+    if (weekCompliance(week, badgeInDates, requiredDays).isCompliant) compliantCount++
   }
   let status: AlignmentStatus
   if (compliantCount >= COMPLIANT_WEEKS_REQUIRED) status = 'aligned'
