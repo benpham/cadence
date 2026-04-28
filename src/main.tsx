@@ -4,15 +4,18 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { BadgeInsProvider } from './lib/BadgeInsContext'
 import { ThemeProvider } from './lib/ThemeContext'
+import { AuthProvider } from './lib/AuthContext'
 import './styles/theme.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider>
-        <BadgeInsProvider>
-          <App />
-        </BadgeInsProvider>
+        <AuthProvider>
+          <BadgeInsProvider>
+            <App />
+          </BadgeInsProvider>
+        </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
   </StrictMode>,
