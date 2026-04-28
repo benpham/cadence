@@ -9,7 +9,7 @@ import './styles/theme.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/cadence">
       <ThemeProvider>
         <AuthProvider>
           <BadgeInsProvider>
