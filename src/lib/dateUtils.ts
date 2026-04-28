@@ -78,7 +78,7 @@ export function weekRangeLabel(start: Date, end: Date): string {
   const endLabel = sameMonth
     ? String(end.getDate())
     : `${MONTH_LABELS[end.getMonth()]} ${end.getDate()}`
-  return `${startLabel}–${endLabel}`
+  return `${startLabel}–\n${endLabel}`
 }
 
 export function monthLabel(d: Date): string {
