@@ -79,7 +79,7 @@
   flex-shrink: 0;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 720px) {
   .site-header__wordmark {
     display: none;
   }
