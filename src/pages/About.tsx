@@ -64,11 +64,11 @@ export default function About() {
         </section>
 
         <section className="about__section card fade-up fade-up-delay-2" aria-labelledby="privacy">
-          <h2 id="privacy" className="about__h2">Your data stays with you.</h2>
+          <h2 id="privacy" className="about__h2">Your data.</h2>
           <p>
-            Cadence stores your badge-in history in your browser's local storage. Nothing is sent
-            anywhere — closing the tab keeps your data, clearing site data resets it. To use Cadence
-            on another device, you'll start fresh there.
+            When signed out, badge-ins are stored in your browser's local storage — nothing leaves
+            your device. When signed in with Google, your data syncs to a private account in the
+            cloud so it's available on any device. Signing out returns to local-only storage.
           </p>
         </section>
 
