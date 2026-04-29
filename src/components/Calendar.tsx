@@ -23,7 +23,7 @@ type CalendarProps = {
 }
 
 export default function Calendar({ today, badgeIns, isBadgedIn, toggle }: CalendarProps) {
-  const { requiredDays } = useSettings()
+  const { requiredDays, weekendsCount } = useSettings()
   const [mode, setMode] = useState<CalendarMode>('rolling')
   const [monthCursor, setMonthCursor] = useState<Date>(
     () => new Date(today.getFullYear(), today.getMonth(), 1),
@@ -135,7 +135,7 @@ export default function Calendar({ today, badgeIns, isBadgedIn, toggle }: Calend
         </div>
 
         {weeks.map((week) => {
-          const compliance = weekCompliance(week, badgeIns, requiredDays)
+          const compliance = weekCompliance(week, badgeIns, requiredDays, weekendsCount)
           return (
             <div className="calendar__row" key={week.start.toISOString()}>
               <span className="calendar__week-label">{week.label}</span>
@@ -146,6 +146,7 @@ export default function Calendar({ today, badgeIns, isBadgedIn, toggle }: Calend
                   today={today}
                   cursorMonth={mode === 'month' ? monthCursorDate.getMonth() : null}
                   badgedIn={isBadgedIn(day)}
+                  weekendExcluded={!weekendsCount && (day.getDay() === 0 || day.getDay() === 6)}
                   onToggle={() => toggle(day)}
                 />
               ))}
@@ -178,10 +179,11 @@ type DayCellProps = {
   today: Date
   cursorMonth: number | null
   badgedIn: boolean
+  weekendExcluded: boolean
   onToggle: () => void
 }
 
-function DayCell({ day, today, cursorMonth, badgedIn, onToggle }: DayCellProps) {
+function DayCell({ day, today, cursorMonth, badgedIn, weekendExcluded, onToggle }: DayCellProps) {
   const isToday = isSameDay(day, today)
   const isFuture = day.getTime() > today.getTime() && !isToday
   const isOutsideMonth = cursorMonth !== null && day.getMonth() !== cursorMonth
@@ -195,7 +197,7 @@ function DayCell({ day, today, cursorMonth, badgedIn, onToggle }: DayCellProps) 
   return (
     <button
       type="button"
-      className={`day-cell${badgedIn ? ' day-cell--in' : ''}${isToday ? ' day-cell--today' : ''}${isOutsideMonth ? ' day-cell--outside' : ''}${isFuture ? ' day-cell--future' : ''}`}
+      className={`day-cell${badgedIn ? ' day-cell--in' : ''}${isToday ? ' day-cell--today' : ''}${isOutsideMonth ? ' day-cell--outside' : ''}${isFuture ? ' day-cell--future' : ''}${weekendExcluded ? ' day-cell--weekend-excluded' : ''}`}
       onClick={onToggle}
       aria-pressed={badgedIn}
       aria-label={`${labelDate} — ${badgedIn ? 'badged in' : 'not badged in'}. Press to ${badgedIn ? 'unmark' : 'mark'}.`}

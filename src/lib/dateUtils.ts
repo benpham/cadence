@@ -115,9 +115,11 @@ export function weekCompliance(
   week: Week,
   badgeInDates: Set<string>,
   requiredDays = COMPLIANT_DAYS_PER_WEEK,
+  weekendsCount = true,
 ): WeekCompliance {
   let count = 0
   for (const day of week.days) {
+    if (!weekendsCount && (day.getDay() === 0 || day.getDay() === 6)) continue
     if (badgeInDates.has(isoDate(day))) count++
   }
   return {
@@ -131,6 +133,7 @@ export function alignmentRatio(
   weeks: Week[],
   badgeInDates: Set<string>,
   requiredDays = COMPLIANT_DAYS_PER_WEEK,
+  weekendsCount = true,
 ): {
   compliantCount: number
   total: number
@@ -138,7 +141,7 @@ export function alignmentRatio(
 } {
   let compliantCount = 0
   for (const week of weeks) {
-    if (weekCompliance(week, badgeInDates, requiredDays).isCompliant) compliantCount++
+    if (weekCompliance(week, badgeInDates, requiredDays, weekendsCount).isCompliant) compliantCount++
   }
   let status: AlignmentStatus
   if (compliantCount >= COMPLIANT_WEEKS_REQUIRED) status = 'aligned'

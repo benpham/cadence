@@ -138,6 +138,10 @@
   margin-bottom: var(--space-6);
 }
 
+.about__appearance-desc--spaced {
+  margin-top: var(--space-8);
+}
+
 .about__theme-row {
   display: flex;
   align-items: center;
@@ -171,7 +175,8 @@
   flex-shrink: 0;
 }
 
-.theme-toggle.is-dark {
+.theme-toggle.is-dark,
+.theme-toggle.is-on {
   background-color: var(--color-primary);
 }
 
@@ -187,7 +192,8 @@
   transition: transform var(--duration-base) var(--ease-out);
 }
 
-.theme-toggle.is-dark .theme-toggle__thumb {
+.theme-toggle.is-dark .theme-toggle__thumb,
+.theme-toggle.is-on .theme-toggle__thumb {
   transform: translateX(24px);
 }
 

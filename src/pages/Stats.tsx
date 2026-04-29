@@ -23,12 +23,12 @@ export default function Stats({ today }: StatsProps) {
   }, [])
 
   const { badgeIns } = useBadgeInsContext()
-  const { requiredDays } = useSettings()
+  const { requiredDays, weekendsCount } = useSettings()
   const weeks = buildRollingWeeks(today)
-  const ratio = alignmentRatio(weeks, badgeIns, requiredDays)
+  const ratio = alignmentRatio(weeks, badgeIns, requiredDays, weekendsCount)
 
   const totalBadgeIns = weeks.reduce(
-    (sum, w) => sum + weekCompliance(w, badgeIns, requiredDays).badgeInCount,
+    (sum, w) => sum + weekCompliance(w, badgeIns, requiredDays, weekendsCount).badgeInCount,
     0,
   )
   const avgPerWeek = weeks.length === 0 ? 0 : totalBadgeIns / weeks.length
@@ -84,7 +84,7 @@ export default function Stats({ today }: StatsProps) {
             </thead>
             <tbody>
               {weeks.map((week, idx) => {
-                const c = weekCompliance(week, badgeIns, requiredDays)
+                const c = weekCompliance(week, badgeIns, requiredDays, weekendsCount)
                 const pct = Math.min(100, (c.badgeInCount / requiredDays) * 100)
                 const isCurrent = week.days.some((d) => isSameDay(d, today))
                 return (

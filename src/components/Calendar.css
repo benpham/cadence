@@ -229,6 +229,25 @@
   border-style: dashed;
 }
 
+.day-cell--weekend-excluded {
+  background: var(--color-surface);
+  border-style: dashed;
+  border-color: var(--color-border);
+  box-shadow: none;
+}
+
+.day-cell--weekend-excluded .day-cell__date,
+.day-cell--weekend-excluded .day-cell__check {
+  color: var(--color-text-muted);
+}
+
+.day-cell--weekend-excluded:hover {
+  background-color: var(--color-surface);
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
 .week-summary {
   display: flex;
   flex-direction: column;

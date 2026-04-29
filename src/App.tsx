@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Stats from './pages/Stats'
 import About from './pages/About'
 import { useBadgeInsContext } from './lib/BadgeInsContext'
+import { useSettings } from './lib/SettingsContext'
 import {
   alignmentRatio,
   buildRollingWeeks,
@@ -14,10 +15,11 @@ import {
 export default function App() {
   const today = useMemo(() => startOfDay(new Date()), [])
   const { badgeIns } = useBadgeInsContext()
+  const { requiredDays, weekendsCount } = useSettings()
   const ratio = useMemo(() => {
     const weeks = buildRollingWeeks(today)
-    return alignmentRatio(weeks, badgeIns)
-  }, [today, badgeIns])
+    return alignmentRatio(weeks, badgeIns, requiredDays, weekendsCount)
+  }, [today, badgeIns, requiredDays, weekendsCount])
 
   return (
     <Layout

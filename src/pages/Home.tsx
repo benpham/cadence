@@ -19,9 +19,9 @@ export default function Home({ today }: HomeProps) {
   }, [])
 
   const { badgeIns, isBadgedIn, toggle } = useBadgeInsContext()
-  const { requiredDays } = useSettings()
+  const { requiredDays, weekendsCount } = useSettings()
   const rollingWeeks = buildRollingWeeks(today)
-  const ratio = alignmentRatio(rollingWeeks, badgeIns, requiredDays)
+  const ratio = alignmentRatio(rollingWeeks, badgeIns, requiredDays, weekendsCount)
 
   return (
     <div className="container home">

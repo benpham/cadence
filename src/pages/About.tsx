@@ -14,7 +14,7 @@ export default function About() {
   }, [])
 
   const { theme, toggleTheme } = useTheme()
-  const { requiredDays, setRequiredDays } = useSettings()
+  const { requiredDays, setRequiredDays, weekendsCount, setWeekendsCount } = useSettings()
 
   return (
     <div className="container about">
@@ -106,6 +106,24 @@ export default function About() {
                 {n} days
               </button>
             ))}
+          </div>
+
+          <p className="about__appearance-desc about__appearance-desc--spaced">
+            Count weekends toward compliance?
+          </p>
+          <div className="about__theme-row">
+            <span className={`about__theme-option${!weekendsCount ? ' is-active' : ''}`} aria-hidden="true">Off</span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={weekendsCount}
+              aria-label="Toggle weekends counting toward compliance"
+              className={`theme-toggle${weekendsCount ? ' is-on' : ''}`}
+              onClick={() => setWeekendsCount(!weekendsCount)}
+            >
+              <span className="theme-toggle__thumb" />
+            </button>
+            <span className={`about__theme-option${weekendsCount ? ' is-active' : ''}`} aria-hidden="true">On</span>
           </div>
         </section>
 
